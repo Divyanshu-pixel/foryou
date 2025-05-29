@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!--this ts the text -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+<style>
+
+  body {
+  font-family: 'Pacifico', cursive;
+}
+h1 {
+  font-family: 'Pacifico', cursive;
+}
+
+</style>
+<title>A Special Question 💘</title>
+
+<style>
+  /* Reset & base */
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: radial-gradient(ellipse at center, #ff9a9e, #fad0c4, #fbc2eb);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    color: white;
+    overflow-x: hidden;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.2em;
+    animation: fadeIn 2s ease-out forwards;
+  }
+  h2 {
+    font-size: 2rem;
+    margin: 0.3em 0 1em;
+  }
+  p {
+    font-size: 1.3rem;
+    margin: 0.5em auto 1em;
+    max-width: 600px;
+    line-height: 1.4;
+    animation: fadeIn 3s ease-in forwards;
+  }
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+  /* Buttons */
+  .button {
+    margin: 12px 10px;
+    padding: 15px 36px;
+    background: #fff;
+    color: #e91e63;
+    font-size: 1.15rem;
+    border-radius: 30px;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s ease;
+    font-weight: 700;
+    box-shadow: 0 5px 15px rgba(233, 30, 99, 0.4);
+    user-select: none;
+  }
+  .button:hover, .button:focus {
+    background: #e91e63;
+    color: white;
+    transform: scale(1.05);
+    outline: none;
+  }
+  /* Container */
+  .container {
+    padding: 40px 20px;
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+  }
+  /* Typing text with blinking cursor */
+  #typingText {
+    font-size: 1.3rem;
+    height: 1.7em;
+    margin-bottom: 20px;
+    font-style: italic;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 22ch;
+    margin-left: auto;
+    margin-right: auto;
+    border-right: 3px solid rgba(255, 255, 255, 0.8);
+    animation: blinkCursor 0.8s steps(2) infinite;
+    user-select: none;
+  }
+  @keyframes blinkCursor {
+    0%, 100% { border-color: rgba(255, 255, 255, 0.8); }
+    50% { border-color: transparent; }
+  }
+  /* Jewelry box */
+  .box {
+    width: 200px;
+    height: 120px;
+    margin: 40px auto 0;
+    position: relative;
+    perspective: 800px;
+    display: none;
+  }
+  .lid {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    background: #4b1248;
+    top: 0;
+    border-radius: 15px 15px 0 0;
+    transform-origin: bottom;
+    transition: transform 2s ease;
+    box-shadow: 0 3px 15px rgba(75, 18, 72, 0.7);
+    transform: rotateX(0deg);
+  }
+  .base {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50%;
+    background: #d35d6e;
+    border-radius: 0 0 15px 15px;
+    z-index: -1;
+    box-shadow: inset 0 4px 8px rgba(255, 255, 255, 0.25);
+  }
+  .custom-ring {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    width: 100px;
+    height: 100px;
+  }
+  .custom-ring img {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 8px #ff3e96);
+  }
+  /* Fireworks container */
+  #fireworksContainer {
+    position: fixed;
+    pointer-events: none;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 15;
+    overflow: visible;
+  }
+  /* Fireworks core */
+  .firework-core {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: radial-gradient(circle, #ff4081 40%, transparent 80%);
+    box-shadow:
+      0 0 18px 5px #ff4081,
+      0 0 40px 12px #f50057;
+    border-radius: 50%;
+    animation: coreExpandFade 1s forwards;
+  }
+  /* Fireworks burst dots */
+  .firework-burst-dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, #f06292 40%, transparent 80%);
+    box-shadow: 0 0 10px 3px #f06292;
+    animation: burstMoveFade 1.4s forwards;
+    border-radius: 50%;
+    transform: translate(0, 0);
+  }
+  /* Fireworks trail dots */
+  .firework-trail {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: radial-gradient(circle, #ff79a8 40%, transparent 80%);
+    box-shadow: 0 0 12px 4px #ff79a8;
+    animation: trailMoveFade 1.6s forwards;
+    border-radius: 50%;
+    transform: translate(0, 0);
+  }
+  @keyframes coreExpandFade {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(2); opacity: 0; }
+  }
+  @keyframes burstMoveFade {
+    0% { opacity: 1; transform: translate(0, 0) scale(1); }
+    100% { opacity: 0; transform: translate(var(--x), var(--y)) scale(0.3); }
+  }
+  @keyframes trailMoveFade {
+    0% { opacity: 1; transform: translate(0, 0) scale(1); }
+    100% { opacity: 0; transform: translate(var(--x), var(--y)) scale(0.2); }
+  }
+  /* Mailbox popup */
+  #pickupPopup {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: linear-gradient(145deg, #ec407a, #d81b60);
+    color: white;
+    padding: 30px 35px;
+    max-width: 340px;
+    border-radius: 15px;
+    box-shadow:
+      0 8px 20px rgba(216, 27, 96, 0.9),
+      inset 0 0 10px rgba(255, 255, 255, 0.2);
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 600;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 20;
+    overflow: hidden;
+    user-select: none;
+  }
+  #pickupPopup.show {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  #pickupPopup::before {
+    content: "";
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    background: url('https://cdn-icons-png.flaticon.com/512/523/523442.png') no-repeat center/contain;
+    filter: drop-shadow(0 0 5px #f48fb1);
+  }
+  #pickupPopup button.closeBtn {
+    margin-top: 25px;
+    padding: 10px 22px;
+    border-radius: 12px;
+    background: white;
+    color: #d81b60;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 5px 15px rgba(216, 27, 96, 0.5);
+    transition: background 0.3s ease;
+  }
+  #pickupPopup button.closeBtn:hover {
+    background: #f48fb1;
+    color: white;
+  }
+  /* Background selector */
+  .background-select {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 6px 10px;
+    user-select: none;
+    z-index: 30;
+  }
+  .background-select label {
+    cursor: pointer;
+    margin: 0 8px;
+    font-size: 0.85rem;
+    color: white;
+  }
+  .background-select input[type="radio"] {
+    display: none;
+  }
+  .background-select label::before {
+    content: "";
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+    border: 2px solid white;
+    transition: background-color 0.3s ease;
+  }
+  .background-select input[type="radio"]:checked + label::before {
+    background-color: #e91e63;
+    border-color: #e91e63;
+  }
+  /* Responsive */
+  @media (max-width: 520px) {
+    .container {
+      padding: 20px 12px;
+    }
+    h1 {
+      font-size: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+    }
+    .button {
+      font-size: 1rem;
+      padding: 12px 26px;
+    }
+    .box {
+      width: 160px;
+      height: 96px;
+    }
+    .custom-ring {
+      width: 80px;
+      height: 80px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="container" role="main" aria-live="polite">
+    <h1 id="mainHeading">Hey, <span id="nameSpan">[Their Name]</span> 💖</h1>
+    
+    <div id="typingText"></div>
+    
+    <p>I want to ask you a very special question... Will be my girlfriend 👉...👈💝 ?</p>
+    <button id="countdownBtn" class="button" aria-live="polite" aria-disabled="false">Click to start ❤️</button>
+    <div id="buttonsWrapper" style="display:none;">
+      <button id="acceptBtn" class="button" aria-label="Accept proposal">Yes, I want to be yours 💍</button>
+      <button id="declineBtn" class="button" aria-label="Decline proposal">Sorry, I can't 💔</button>
+      <button id="surpriseBtn" class="button" aria-label="See surprise message">Show me a surprise 🎁</button>
+    </div>
+    <div class="box" aria-hidden="true">
+      <div class="lid"></div>
+      <div class="base"></div>
+      <div class="custom-ring" role="img" aria-label="Engagement ring">
+        <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExeGlucXppaXI5YmprNjM3Y2p3MGd1M3U0OXFlNDM0NmRrNjB0bnozdyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/SriXCCCn3bxgQ3efeX/giphy.gif" alt="Ring Animation" style="width: 100px; height: 100px;" alt="Shining diamond ring" />
+      </div>
+    </div>
+  </div>
+
+  <div id="fireworksContainer" aria-hidden="true"></div>
+
+  <div id="pickupPopup" role="alertdialog" aria-modal="true" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <div id="popupTitle" style="font-weight:bold; margin-bottom:10px;">Here's a surprise! 🎉</div>
+    <div id="popupDesc"></div>
+    <button class="closeBtn" aria-label="Close surprise popup">Close</button>
+  </div>
+
+  <div class="background-select" aria-label="Select background theme">
+    <input type="radio" name="bg" id="bg1" value="gradient" checked>
+    <label for="bg1" title="Pink gradient">💗</label>
+    <input type="radio" name="bg" id="bg2" value="midnight">
+    <label for="bg2" title="Midnight">🌙</label>
+    <input type="radio" name="bg" id="bg3" value="gray">
+    <label for="bg3" title="Gray">🌫️</label>
+    <input type="radio" name="bg" id="bg4" value="light">
+    <label for="bg4" title="Light">🌞</label>
+  </div>
+
+<script>
+  // Text typing effect
+  const typingTextEl = document.getElementById('typingText');
+  const textToType = "Will you be mine 💓?";
+  let index = 0;
+  function typeText() {
+    if(index <= textToType.length) {
+      typingTextEl.textContent = textToType.slice(0, index);
+      index++;
+      setTimeout(typeText, 140);
+    }
+  }
+  typeText();
+
+  // Countdown button logic
+  const countdownBtn = document.getElementById('countdownBtn');
+  const buttonsWrapper = document.getElementById('buttonsWrapper');
+  const box = document.querySelector('.box');
+  const lid = box.querySelector('.lid');
+  const ring = box.querySelector('.custom-ring');
+  const fireworksContainer = document.getElementById('fireworksContainer');
+  const pickupPopup = document.getElementById('pickupPopup');
+  const popupDesc = pickupPopup.querySelector('#popupDesc');
+  const closePopupBtn = pickupPopup.querySelector('.closeBtn');
+  const mainHeadingName = document.getElementById('nameSpan');
+
+  // Prompt for name on page load (optional)
+  window.addEventListener('load', () => {
+    const userName = prompt("What's your name?")?.trim() || "[Their Name]";
+    mainHeadingName.textContent = userName;
+  });
+
+  let countdown = 5;
+  let countdownInterval;
+
+  function startCountdown() {
+    countdownBtn.disabled = true;
+    countdownBtn.setAttribute('aria-disabled', 'true');
+    countdownBtn.textContent = `Starting in ${countdown}s...`;
+    countdownInterval = setInterval(() => {
+      countdown--;
+      countdownBtn.textContent = `Starting in ${countdown}s...`;
+      if(countdown <= 0) {
+        clearInterval(countdownInterval);
+        countdownBtn.style.display = 'none';
+        buttonsWrapper.style.display = 'block';
+        changeBackground('gradient');
+      }
+    }, 1000);
+  }
+  countdownBtn.addEventListener('click', () => {
+    if(!countdownInterval) startCountdown();
+  });
+
+  // Background change handler
+  function changeBackground(bg) {
+    fireworksContainer.innerHTML = ''; // Clear fireworks
+    switch(bg) {
+      case 'gradient':
+        document.body.style.background = 'radial-gradient(ellipse at center, #ff9a9e, #fad0c4, #fbc2eb)';
+        document.body.style.animation = 'gradient 15s ease infinite';
+        break;
+      case 'midnight':
+        document.body.style.background = 'linear-gradient(180deg, #0b0033 0%, #200040 70%)';
+        document.body.style.animation = 'none';
+        break;
+      case 'gray':
+        document.body.style.background = 'linear-gradient(145deg, #777, #444)';
+        document.body.style.animation = 'none';
+        break;
+      case 'light':
+        document.body.style.background = 'linear-gradient(145deg, #ffe7e9, #fff0f2)';
+        document.body.style.animation = 'none';
+        break;
+      default:
+        document.body.style.background = 'radial-gradient(ellipse at center, #ff9a9e, #fad0c4, #fbc2eb)';
+        document.body.style.animation = 'gradient 15s ease infinite';
+    }
+  }
+  // Background selector event
+  document.querySelectorAll('.background-select input[type="radio"]').forEach(input => {
+    input.addEventListener('change', e => {
+      changeBackground(e.target.value);
+    });
+  });
+
+  // Fireworks animation
+  function createFirework(x, y) {
+    const firework = document.createElement('div');
+    firework.classList.add('firework-core');
+    firework.style.left = `${x}px`;
+    firework.style.top = `${y}px`;
+    fireworksContainer.appendChild(firework);
+
+    // Create burst dots around
+    const numDots = 8;
+    for(let i = 0; i < numDots; i++) {
+      const dot = document.createElement('div');
+      dot.classList.add('firework-burst-dot');
+      const angle = (360 / numDots) * i;
+      const radius = 60;
+      const radian = angle * Math.PI / 180;
+      const xOffset = Math.cos(radian) * radius;
+      const yOffset = Math.sin(radian) * radius;
+      dot.style.left = `${x}px`;
+      dot.style.top = `${y}px`;
+      dot.style.setProperty('--x', `${xOffset}px`);
+      dot.style.setProperty('--y', `${yOffset}px`);
+      fireworksContainer.appendChild(dot);
+    }
+    // Remove after animation
+    setTimeout(() => {
+      firework.remove();
+      fireworksContainer.querySelectorAll('.firework-burst-dot').forEach(d => d.remove());
+    }, 1500);
+  }
+
+  // Accept button logic
+  const acceptBtn = document.getElementById('acceptBtn');
+  acceptBtn.addEventListener('click', () => {
+    buttonsWrapper.style.display = 'none';
+    box.style.display = 'block';
+    ring.style.display = 'none';
+    lid.style.transform = 'rotateX(0deg)';
+
+    // Open lid animation
+    setTimeout(() => {
+      lid.style.transform = 'rotateX(-110deg)';
+    }, 200);
+
+    // Show ring after lid open
+    setTimeout(() => {
+      ring.style.display = 'block';
+      changeBackground('midnight');
+      // Fireworks center on box position
+      const rect = box.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      createFirework(centerX, centerY);
+      // Fireworks multiple bursts for more effect
+      let fwCount = 0;
+      const fwInterval = setInterval(() => {
+        const randomX = centerX + (Math.random() - 0.5) * 200;
+        const randomY = centerY + (Math.random() - 0.5) * 200;
+        createFirework(randomX, randomY);
+        fwCount++;
+        if(fwCount >= 6) clearInterval(fwInterval);
+      }, 300);
+
+      // Redirect after fireworks
+      setTimeout(() => {
+        window.location.href = 'https://youtu.be/VsXkHAYSmbY?t=21'; // Wedding song
+      }, 6000);
+    }, 2500);
+  });
+
+  // Decline button logic
+  const declineBtn = document.getElementById('declineBtn');
+  declineBtn.addEventListener('click', () => {
+    buttonsWrapper.style.display = 'none';
+    countdownBtn.style.display = 'none';
+    box.style.display = 'none';
+    fireworksContainer.innerHTML = '';
+    changeBackground('gray');
+    document.querySelector('.container').innerHTML = `
+      <h2>Thank you for your honesty ❤️</h2>
+      <p>I respect your decision. Wishing you all the happiness in the world!</p>
+    `;
+    setTimeout(() => {
+      window.location.href = 'https://www.youtube.com/shorts/hYFJdB0YEYg?feature=share'; // Sad music
+    }, 5000);
+  });
+
+  // Surprise popup with random pickup lines
+  const surpriseBtn = document.getElementById('surpriseBtn');
+  const pickupLines = [
+    "Are you a magician? Because whenever I look at you, everyone else disappears.",
+    "Do you have a map? I just got lost in your eyes.",
+    "Are you a camera? Because every time I look at you, I smile.",
+    "If you were a vegetable, you’d be a cute-cumber!",
+    "If you were a triangle, you’d be acute one.",
+    "Are you French? Because Eiffel for you.",
+    "Do you have a Band-Aid? Because I just scraped my knee falling for you.",
+    "Is your name Google? Because you have everything I’ve been searching for",
+    "Do you have a sunburn, or are you always this hot?"
+  ];
+  surpriseBtn.addEventListener('click', () => {
+    const randomIndex = Math.floor(Math.random() * pickupLines.length);
+    popupDesc.textContent = pickupLines[randomIndex];
+    pickupPopup.classList.add('show');
+  });
+  closePopupBtn.addEventListener('click', () => {
+    pickupPopup.classList.remove('show');
+  });
+
+  // Close popup on Escape key for accessibility
+  window.addEventListener('keydown', e => {
+    if(e.key === 'Escape' && pickupPopup.classList.contains('show')) {
+      pickupPopup.classList.remove('show');
+    }
+  });
+  
+</script>
+</body>
+</html>
